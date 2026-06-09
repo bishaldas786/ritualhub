@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ritual Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#ffffff;--bg2:#f8f9fa;--bg3:#f1f3f5;
+--t1:#0a0a0a;--t2:rgba(0,0,0,.55);--t3:rgba(0,0,0,.35);
+--g:#16a34a;--g2:#15803d;--glow:rgba(22,163,74,.12);--glow2:rgba(22,163,74,.05);
+--border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.15);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--t1);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:rgba(34,197,94,.2);color:#fff}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:#000}::-webkit-scrollbar-thumb{background:#222;border-radius:2px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:56px;display:flex;align-items:center;padding:0 32px;border-bottom:1px solid transparent;transition:all .3s}
+nav.scrolled{background:rgba(5,5,5,.85);backdrop-filter:blur(20px);border-color:var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none}
+.logo-mark{width:28px;height:28px;border-radius:8px;background:var(--g);display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px rgba(34,197,94,.4)}
+.logo-mark svg{width:14px;height:14px}
+.logo-txt{font-size:15px;font-weight:700;letter-spacing:-.02em}
+.nav-links{display:flex;gap:2px;margin:0 auto}
+.nav-link{font-size:13.5px;color:var(--t2);padding:6px 14px;border-radius:7px;cursor:pointer;transition:all .2s;background:none;border:none;font-family:'Inter',sans-serif}
+.nav-link:hover{color:var(--t1);background:rgba(255,255,255,.05)}
+.nav-right{display:flex;gap:8px;align-items:center}
+.btn-ghost{background:none;border:1px solid var(--border2);color:var(--t2);padding:7px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.25);color:var(--t1)}
+.btn-primary{background:var(--g);color:#000;padding:7px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .2s;box-shadow:0 0 20px rgba(34,197,94,.25)}
+.btn-primary:hover{background:#16c952;box-shadow:0 0 30px rgba(34,197,94,.4);transform:translateY(-1px)}
+.w-dot{width:6px;height:6px;border-radius:50%;background:var(--g);box-shadow:0 0 8px var(--g);animation:pulse 2s infinite;display:inline-block;margin-right:6px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(ellipse,rgba(34,197,94,.08) 0%,transparent 70%);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:64px 64px;pointer-events:none;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);color:var(--g);font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;margin-bottom:32px;letter-spacing:.04em;text-transform:uppercase;opacity:0;animation:fadeUp .6s .1s forwards}
+h1{font-size:clamp(52px,8vw,96px);font-weight:900;letter-spacing:-.04em;line-height:1.02;margin-bottom:24px;opacity:0;animation:fadeUp .6s .2s forwards}
+h1 .dim{color:var(--t2)}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--t2);max-width:480px;line-height:1.7;margin-bottom:40px;font-weight:400;opacity:0;animation:fadeUp .6s .3s forwards}
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .6s .4s forwards}
+.hero-cta-p{background:var(--g);color:#000;padding:12px 28px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;border:none;font-family:'Inter',sans-serif;transition:all .25s;box-shadow:0 0 30px rgba(34,197,94,.3)}
+.hero-cta-p:hover{box-shadow:0 0 50px rgba(34,197,94,.5);transform:translateY(-2px)}
+.hero-cta-s{background:rgba(255,255,255,.05);color:var(--t1);padding:12px 28px;border-radius:10px;font-size:15px;font-weight:500;cursor:pointer;border:1px solid var(--border2);font-family:'Inter',sans-serif;transition:all .25s}
+.hero-cta-s:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2)}
+
+/* ECOSYSTEM VIZ */
+.ecosystem-viz{position:relative;width:min(500px,90vw);height:min(500px,90vw);margin:64px auto 0;opacity:0;animation:fadeUp .8s .5s forwards}
+.viz-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:18px;background:var(--g);display:flex;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(34,197,94,.5),0 0 120px rgba(34,197,94,.2);z-index:2}
+.viz-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px solid;animation:spin linear infinite}
+.r1{width:160px;height:160px;border-color:rgba(34,197,94,.15);animation-duration:20s}
+.r2{width:260px;height:260px;border-color:rgba(34,197,94,.08);animation-duration:35s;animation-direction:reverse}
+.r3{width:380px;height:380px;border-color:rgba(34,197,94,.05);animation-duration:50s}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.viz-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:all .3s}
+.viz-node:hover{transform:translate(-50%,-50%) scale(1.1)}
+.node-dot{width:40px;height:40px;border-radius:12px;background:var(--bg2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .3s;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.viz-node:hover .node-dot{border-color:rgba(34,197,94,.4);box-shadow:0 0 20px rgba(34,197,94,.2)}
+.node-lbl{font-size:10px;color:var(--t3);font-weight:600;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.viz-line{position:absolute;top:50%;left:50%;transform-origin:0 0;height:1px;background:linear-gradient(90deg,rgba(34,197,94,.3),transparent);pointer-events:none}
+
+/* STATS */
+.stats{padding:80px 32px;max-width:1000px;margin:0 auto}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.stat-item{background:var(--bg);padding:40px 32px;text-align:center}
+.stat-n{font-size:48px;font-weight:800;letter-spacing:-.04em;color:var(--t1);line-height:1}
+.stat-l{font-size:13px;color:var(--t3);margin-top:8px;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+
+/* BENTO */
+.bento{padding:80px 32px;max-width:1100px;margin:0 auto}
+.section-label{font-size:12px;font-weight:700;color:var(--g);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px}
+.section-title{font-size:clamp(36px,5vw,56px);font-weight:800;letter-spacing:-.04em;line-height:1.1;margin-bottom:64px}
+.section-title .dim{color:var(--t2)}
+.bento-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto;gap:12px}
+.bento-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:32px;transition:all .3s;position:relative;overflow:hidden}
+.bento-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,var(--glow2),transparent);opacity:0;transition:opacity .3s;pointer-events:none}
+.bento-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.bento-card:hover::before{opacity:1}
+.bc-1{grid-column:span 2}
+.bc-4{grid-column:span 2}
+.bento-icon{width:44px;height:44px;border-radius:12px;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:20px}
+.bento-title{font-size:18px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.bento-desc{font-size:14px;color:var(--t2);line-height:1.65}
+.bento-big .bento-title{font-size:28px;letter-spacing:-.03em;margin-bottom:12px}
+.bento-big .bento-desc{font-size:16px}
+.app-preview{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.app-pill{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;color:var(--t2);display:flex;align-items:center;gap:6px;transition:all .2s}
+.app-pill:hover{border-color:rgba(34,197,94,.3);color:var(--t1)}
+
+/* APPS */
+.apps-section{padding:80px 32px;max-width:1100px;margin:0 auto}
+.search-bar{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+.search-inp{flex:1;min-width:200px;height:44px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:0 16px;font-size:14px;font-family:'Inter',sans-serif;color:var(--t1);outline:none;transition:all .2s}
+.search-inp:focus{border-color:rgba(34,197,94,.4);box-shadow:0 0 0 3px rgba(34,197,94,.06)}
+.search-inp::placeholder{color:var(--t3)}
+.cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:32px}
+.cat{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);color:var(--t2);background:none;font-family:'Inter',sans-serif;transition:all .2s}
+.cat:hover{border-color:var(--border2);color:var(--t1)}
+.cat.on{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3);color:var(--g)}
+.apps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.app-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.app-card::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top,rgba(34,197,94,.04),transparent);opacity:0;transition:opacity .3s}
+.app-card:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.app-card:hover::after{opacity:1}
+.ac-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:14px;background:rgba(255,255,255,.04);border:1px solid var(--border)}
+.ac-name{font-size:13.5px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+.ac-builder{font-size:11px;color:var(--t3);margin-bottom:8px;font-family:monospace}
+.ac-desc{font-size:12px;color:var(--t2);line-height:1.55;margin-bottom:14px}
+.ac-foot{display:flex;align-items:center;justify-content:space-between}
+.ac-cat{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:rgba(34,197,94,.08);color:var(--g);border:1px solid rgba(34,197,94,.15)}
+.ac-acts{display:flex;gap:4px}
+.ac-btn{width:26px;height:26px;border-radius:6px;background:rgba(255,255,255,.04);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;font-size:11px}
+.ac-btn:hover{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.08)}
+.ac-btn.voted{background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.3)}
+.ac-btn.saved{background:rgba(255,200,50,.08);border-color:rgba(255,200,50,.3)}
+.vote-n{font-size:10px;color:var(--t3);min-width:14px;text-align:center}
+
+/* MODAL */
+.modal-bd{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(10px)}
+.modal-bd.open{display:flex;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:scale(1)}}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:20px;padding:32px;width:100%;max-width:440px;position:relative;max-height:90vh;overflow-y:auto}
+.modal-x{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t2);font-size:14px;transition:all .2s}
+.modal-x:hover{border-color:var(--border2);color:var(--t1)}
+.modal-title{font-size:20px;font-weight:800;letter-spacing:-.03em;margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--t2);margin-bottom:24px;line-height:1.6}
+.w-opt{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all .2s;margin-bottom:8px}
+.w-opt:hover{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04);transform:translateX(2px)}
+.w-ic{width:36px;height:36px;border-radius:9px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:18px;border:1px solid var(--border);flex-shrink:0}
+.w-nm{font-size:13.5px;font-weight:600}
+.w-ht{font-size:11px;color:var(--t3)}
+.divln{height:1px;background:var(--border);margin:16px 0}
+.manual-row{display:flex;gap:8px}
+.manual-in{flex:1;height:40px;padding:0 12px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;font-size:12px;font-family:monospace;color:var(--t1);outline:none;transition:border-color .2s}
+.manual-in:focus{border-color:rgba(34,197,94,.4)}
+.manual-in::placeholder{color:var(--t3)}
+.conn-btn{background:var(--g);color:#000;border:none;border-radius:8px;padding:0 16px;height:40px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s;white-space:nowrap}
+.conn-btn:hover{background:#16c952}
+.err-txt{font-size:11.5px;color:#f87171;margin-top:6px}
+.app-det-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px;background:rgba(255,255,255,.04);border:1px solid var(--border)}
+.det-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
+.ds{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
+.ds-n{font-size:18px;font-weight:700;color:var(--t1)}
+.ds-l{font-size:10px;color:var(--t3);margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
+.det-acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.det-visit{background:var(--g);color:#000;border:none;padding:10px 20px;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.det-visit:hover{background:#16c952;transform:translateY(-1px)}
+.det-sec{background:rgba(255,255,255,.05);color:var(--t1);border:1px solid var(--border);padding:10px 16px;border-radius:9px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:all .2s}
+.det-sec:hover{border-color:var(--border2)}
+
+/* ADD MODAL */
+.form-group{margin-bottom:14px}
+.form-label{font-size:11px;font-weight:700;color:var(--t3);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:.05em}
+.form-input,.form-select,.form-textarea{width:100%;padding:9px 12px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:'Inter',sans-serif;color:var(--t1);outline:none;transition:all .2s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:rgba(34,197,94,.4);box-shadow:0 0 0 3px rgba(34,197,94,.05)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--t3)}
+.form-select{background:var(--bg3)}
+.form-select option{background:var(--bg3)}
+.form-textarea{resize:vertical;min-height:70px;line-height:1.5}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.code-box{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center;margin-bottom:4px}
+.code-in{width:100%;height:42px;padding:0 14px;background:rgba(255,255,255,.04);border:2px solid var(--border);border-radius:9px;font-size:14px;font-family:monospace;color:var(--t1);outline:none;letter-spacing:.08em;text-align:center;text-transform:uppercase;transition:all .2s;margin-top:14px}
+.code-in:focus{border-color:rgba(34,197,94,.5)}
+.unlock-btn{width:100%;background:var(--g);color:#000;border:none;padding:11px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-top:10px;transition:all .2s}
+.unlock-btn:hover{background:#16c952}
+.submit-btn{width:100%;background:var(--g);color:#000;border:none;padding:12px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;margin-top:8px;transition:all .2s;box-shadow:0 0 20px rgba(34,197,94,.2)}
+.submit-btn:hover{background:#16c952;box-shadow:0 0 30px rgba(34,197,94,.35)}
+
+/* COMMUNITY */
+.community{padding:80px 32px;max-width:900px;margin:0 auto}
+.activity-feed{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.activity-item{background:var(--bg);padding:20px 24px;display:flex;align-items:flex-start;gap:14px;transition:background .2s}
+.activity-item:hover{background:var(--bg2)}
+.av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--g2),var(--g));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.act-meta{flex:1}
+.act-wallet{font-size:13px;font-weight:600;font-family:monospace;color:var(--t1)}
+.act-text{font-size:13.5px;color:var(--t2);margin-top:3px;line-height:1.55}
+.act-time{font-size:11px;color:var(--t3);margin-top:4px}
+.act-badge{font-size:10px;background:rgba(34,197,94,.1);color:var(--g);border:1px solid rgba(34,197,94,.2);padding:2px 8px;border-radius:5px;font-weight:700;margin-left:8px}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:48px 32px;max-width:1100px;margin:0 auto}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:var(--t3);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--t1)}
+.footer-copy{font-size:12px;color:var(--t3)}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--bg2);border:1px solid var(--border2);color:var(--t1);padding:12px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,.5);backdrop-filter:blur(10px)}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* ANIM */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .bento-grid{grid-template-columns:1fr}
+  .bc-1,.bc-4{grid-column:span 1}
+  .apps-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .apps-grid{grid-template-columns:1fr}
+  h1{font-size:44px}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-logo" onclick="scrollTop()">
+    <div class="logo-mark"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1L13 4V10L7 13L1 10V4L7 1Z" stroke="white" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="white"/></svg></div>
+    <span class="logo-txt">Ritual Hub</span>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link" onclick="scrollTo2('apps-section')">Apps</button>
+    <button class="nav-link" onclick="scrollTo2('community-section')">Community</button>
+    <button class="nav-link" onclick="scrollTo2('bento-section')">Features</button>
+  </div>
+  <div class="nav-right">
+    <button class="btn-ghost" id="wallet-btn" onclick="openWallet()"><span class="w-dot" id="w-dot" style="display:none"></span><span id="wallet-label">Connect Wallet</span></button>
+    <button class="btn-primary" onclick="openAdd()">+ Submit App</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-badge">⬡ Ritual Network Ecosystem</div>
+  <h1>Discover the<br><span class="dim">Ritual Universe</span></h1>
+  <p class="hero-sub">The definitive directory of apps, agents, and protocols built on Ritual Network.</p>
+  <div class="hero-ctas">
+    <button class="hero-cta-p" onclick="scrollTo2('apps-section')">Explore Apps →</button>
+    <button class="hero-cta-s" onclick="openWallet()">Connect Wallet</button>
+  </div>
+
+  <!-- Ecosystem viz -->
+  <div class="ecosystem-viz" id="viz"></div>
+</section>
+
+<!-- STATS -->
+<section class="stats reveal">
+  <div class="stats-grid">
+    <div class="stat-item"><div class="stat-n" id="s1">0</div><div class="stat-l">Apps Listed</div></div>
+    <div class="stat-item"><div class="stat-n" data-target="89" id="s2">0</div><div class="stat-l">Builders</div></div>
+    <div class="stat-item"><div class="stat-n" data-target="7" id="s3">0</div><div class="stat-l">Categories</div></div>
+    <div class="stat-item"><div class="stat-n" data-target="1979" id="s4">0</div><div class="stat-l">Chain ID</div></div>
+  </div>
+</section>
+
+<!-- BENTO -->
+<section class="bento reveal" id="bento-section">
+  <div class="section-label">Platform</div>
+  <div class="section-title">Everything you need<br><span class="dim">to navigate Ritual.</span></div>
+  <div class="bento-grid">
+    <div class="bento-card bc-1 bento-big">
+      <div class="bento-icon">🗺️</div>
+      <div class="bento-title">App Directory</div>
+      <div class="bento-desc">Browse 100+ community-built apps across DeFi, Gaming, NFTs, Identity, Analytics, and more. Filter by category, search by name or builder.</div>
+      <div class="app-preview" id="bento-preview"></div>
+    </div>
+    <div class="bento-card">
+      <div class="bento-icon">🔗</div>
+      <div class="bento-title">Wallet Connect</div>
+      <div class="bento-desc">MetaMask, Rabby, WalletConnect. Sign in with Ethereum. Your identity, on-chain.</div>
+    </div>
+    <div class="bento-card">
+      <div class="bento-icon">⬆️</div>
+      <div class="bento-title">Upvote & Save</div>
+      <div class="bento-desc">Vote for your favorite apps and build a personal collection of saved tools.</div>
+    </div>
+    <div class="bento-card bc-4">
+      <div class="bento-icon">🤖</div>
+      <div class="bento-title">AI Recommendations</div>
+      <div class="bento-desc">Describe what you're looking for. Get instant smart recommendations from across the ecosystem.</div>
+    </div>
+    <div class="bento-card">
+      <div class="bento-icon">💬</div>
+      <div class="bento-title">Community Feed</div>
+      <div class="bento-desc">On-chain verified posts. Real wallets, real conversations about what's being built.</div>
+    </div>
+  </div>
+</section>
+
+<!-- APPS -->
+<section class="apps-section reveal" id="apps-section">
+  <div class="section-label">Directory</div>
+  <div class="section-title">All Apps<br><span class="dim">on Ritual.</span></div>
+  <div class="search-bar">
+    <input class="search-inp" id="search" type="text" placeholder="Search apps, builders, categories…" oninput="renderApps()">
+  </div>
+  <div class="cats" id="cats"></div>
+  <div class="apps-grid" id="apps-grid"></div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="community reveal" id="community-section">
+  <div class="section-label">Community</div>
+  <div class="section-title">What builders<br><span class="dim">are saying.</span></div>
+  <div class="activity-feed" id="activity-feed"></div>
+</section>
+
+<div style="max-width:1100px;margin:0 auto;padding:0 32px 80px">
+  <div class="bento-card reveal" style="padding:40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px">
+    <div>
+      <div style="font-size:28px;font-weight:800;letter-spacing:-.03em;margin-bottom:8px">Built something on Ritual?</div>
+      <div style="font-size:15px;color:var(--t2)">Submit your app and get discovered by the community.</div>
+    </div>
+    <button class="btn-primary" style="padding:12px 28px;font-size:15px" onclick="openAdd()">Submit Your App →</button>
+  </div>
+</div>
+
+<div style="max-width:1100px;margin:0 auto">
+<footer>
+  <div class="footer-inner">
+    <div class="nav-logo">
+      <div class="logo-mark"><svg viewBox="0 0 14 14" fill="none"><path d="M7 1L13 4V10L7 13L1 10V4L7 1Z" stroke="white" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="white"/></svg></div>
+      <span class="logo-txt">Ritual Hub</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://docs.ritualfoundation.org" target="_blank">Docs</a>
+      <a href="https://explorer.ritualfoundation.org" target="_blank">Explorer</a>
+      <a href="https://faucet.ritualfoundation.org" target="_blank">Faucet</a>
+      <a href="https://rpc.ritualfoundation.org" target="_blank">RPC</a>
+    </div>
+    <div class="footer-copy">Built by <span style="color:var(--g);font-weight:600">Deathless</span> · Ritual Network</div>
+  </div>
+</footer>
+</div>
+
+<!-- WALLET MODAL -->
+<div class="modal-bd" id="wallet-modal" onclick="if(event.target===this)closeWallet()">
+  <div class="modal">
+    <button class="modal-x" onclick="closeWallet()">✕</button>
+    <div class="modal-title">Connect Wallet</div>
+    <div class="modal-sub">Sign in with Ethereum to access all features.</div>
+    <div class="w-opt" onclick="connectWallet('metamask')"><div class="w-ic">🦊</div><div><div class="w-nm">MetaMask</div><div class="w-ht">Browser extension</div></div><span style="margin-left:auto;color:var(--t3);font-size:18px">›</span></div>
+None    <div class="w-opt" onclick="connectWallet('rabby')"><div class="w-ic">🐰</div><div><div class="w-nm">Rabby</div><div class="w-ht">Smart wallet</div></div><span style="margin-left:auto;color:var(--t3);font-size:18px">›</span></div>
+    <div class="divln"></div>
+    <div style="font-size:12px;color:var(--t3);margin-bottom:10px">Or paste address manually</div>
+    <div class="manual-row">
+      <input class="manual-in" id="manual-addr" placeholder="0x…">
+      <button class="conn-btn" onclick="connectManual()">Connect</button>
+    </div>
+    <div class="err-txt" id="addr-err"></div>
+  </div>
+</div>
+
+<!-- APP DETAIL -->
+<div class="modal-bd" id="app-modal" onclick="if(event.target===this)closeApp()">
+  <div class="modal" id="app-modal-inner"></div>
+</div>
+
+<!-- ADD APP -->
+<div class="modal-bd" id="add-modal" onclick="if(event.target===this)closeAdd()">
+  <div class="modal">
+    <button class="modal-x" onclick="closeAdd()">✕</button>
+    <div class="modal-title">Submit App</div>
+    <div class="modal-sub">Authorized contributors only.</div>
+    <div id="code-gate">
+      <div class="code-box">
+        <div style="font-size:32px;margin-bottom:8px">🔐</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:4px">Access Required</div>
+        <div style="font-size:13px;color:var(--t2)">Enter your contributor code.</div>
+        <input class="code-in" id="access-code" placeholder="ENTER CODE" onkeydown="if(event.key==='Enter')checkCode()">
+        <button class="unlock-btn" onclick="checkCode()">Unlock</button>
+        <div id="code-msg" style="margin-top:8px;font-size:12px"></div>
+      </div>
+    </div>
+    <div id="add-form" style="display:none">
+      <div style="background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:10px 14px;font-size:12.5px;color:var(--g);font-weight:600;margin-bottom:16px">✅ Access granted</div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">App Name *</label><input class="form-input" id="f-name" placeholder="e.g. Ritual Swap"></div>
+        <div class="form-group"><label class="form-label">Builder *</label><input class="form-input" id="f-builder" placeholder="@handle"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Category *</label><select class="form-select" id="f-cat"><option value="">Select…</option><option>DeFi</option><option>NFT</option><option>Gaming</option><option>Identity</option><option>Analytics</option><option>Social</option><option>Tools</option></select></div>
+        <div class="form-group"><label class="form-label">Icon</label><input class="form-input" id="f-icon" placeholder="🚀" maxlength="4"></div>
+      </div>
+      <div class="form-group"><label class="form-label">App URL *</label><input class="form-input" id="f-url" placeholder="https://…" type="url"></div>
+      <div class="form-group"><label class="form-label">Description *</label><textarea class="form-textarea" id="f-desc" placeholder="What does this app do?"></textarea></div>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Est. Views</label><input class="form-input" id="f-views" placeholder="500" type="number" min="0"></div>
+        <div class="form-group" style="display:flex;align-items:flex-end;padding-bottom:4px"><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--t2)"><input type="checkbox" id="f-featured" style="accent-color:var(--g);width:14px;height:14px">Featured</label></div>
+      </div>
+      <div id="form-err" style="font-size:12px;color:#f87171;margin-bottom:8px;display:none"></div>
+      <button class="submit-btn" onclick="submitApp()">Add to Directory →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SECRET='DEATHLESS RITUAL';
+const S={wallet:null,short:null,votes:{},saved:{},filter:'All',unlocked:false,dynApps:[]};
+
+// ── DATA ──
+const APPS=[
+  {id:1,name:"Ritual Testnet Card",cat:"Identity",desc:"On-chain identity card tied to your testnet wallet.",url:"https://ritual-onchain-id.vercel.app/",builder:"maharshi_17904",icon:"🪪",views:980},
+  {id:2,name:"Mint Your X Profile",cat:"NFT",desc:"Convert your X profile into a mintable on-chain NFT.",url:"https://web-3-profile-mint--rolex9723060.replit.app/",builder:"rolex9723060",icon:"🖼️",views:1550,featured:true},
+  {id:3,name:"Address Analyzer",cat:"Analytics",desc:"Deep wallet analytics, scores, and on-chain reputation.",url:"https://ritual-stats-check.vercel.app/",builder:"0xtanoy",icon:"📊",views:2100,featured:true},
+  {id:5,name:"Haezl Trading Agent",cat:"DeFi",desc:"Autonomous AI trading agent for Ritual Network.",url:"https://haezl-trading.info/#dashboard",builder:"haezl",icon:"🤖",views:3200,featured:true},
+  {id:6,name:"GM Strike",cat:"Social",desc:"Claim your daily GM streak on-chain every 24 hours.",url:"https://gritual-striker.vercel.app/",builder:"kency17",icon:"🌅",views:760},
+  {id:7,name:"NFT Marketplace",cat:"NFT",desc:"Browse, buy, and sell NFTs on Ritual.",url:"https://ritual-searcher--tanjir9721.replit.app/",builder:"tanjir9721",icon:"🛒",views:1800},
+  {id:8,name:"RitualDex",cat:"DeFi",desc:"Perpetual DEX on Ritual. Trade with leverage.",url:"https://ritual-perp-dex.replit.app/",builder:"Community",icon:"📈",views:2800,featured:true},
+  {id:9,name:"Ritual Casino",cat:"Gaming",desc:"On-chain casino with provably fair games.",url:"https://ritualcasino.lovable.app/",builder:"Community",icon:"🎰",views:4100,featured:true},
+  {id:10,name:"Ritual Micro Tap",cat:"Social",desc:"Tap-to-earn micro rewards on Ritual.",url:"https://ritual-micro-tap.vercel.app/",builder:"lubudebotton",icon:"👆",views:580},
+  {id:12,name:"Ritual Discord Tracker",cat:"Social",desc:"Track Ritual Discord activity and NFT mints.",url:"https://www.ritcord.xyz/",builder:"marksocrates",icon:"💬",views:720},
+  {id:13,name:"Builder Proof",cat:"Tools",desc:"Cryptographic proof of your building activity.",url:"https://ritual-builder-proof.pages.dev/",builder:"pushkin_ievgen",icon:"🔏",views:720},
+  {id:14,name:"Ritual Tamagotchi",cat:"Gaming",desc:"Raise your on-chain Ritual creature.",url:"https://ritual-tamagotchi.vercel.app/",builder:"mirage5815",icon:"🐾",views:1100},
+  {id:15,name:"Mission Console",cat:"Tools",desc:"Track and manage your Ritual testnet missions.",url:"https://ritual-console.netlify.app/",builder:"herbcase",icon:"🎮",views:1680},
+  {id:16,name:"Jumping Siggy",cat:"Gaming",desc:"Jump and collect on-chain rewards with Siggy.",url:"https://jumping-siggy-the-pussy.vercel.app/",builder:"randzkie05",icon:"🎪",views:3800},
+  {id:17,name:"Rekt or Rich",cat:"Gaming",desc:"High-stakes prediction game.",url:"https://ramavenom.github.io/rekt-or-rich/",builder:"ramaxwhale",icon:"💸",views:2300},
+  {id:19,name:"Community Faucet",cat:"Tools",desc:"Get Ritual testnet tokens instantly.",url:"https://ritual-faucet-blueprint--ritualcommunity.replit.app/",builder:"ritualcommunity",icon:"🚿",views:3400,featured:true},
+  {id:20,name:"Lucky Arcade",cat:"Gaming",desc:"Provably fair arcade games with on-chain prizes.",url:"https://ritual-casino-quest.lovable.app/",builder:"Community",icon:"🎲",views:2600},
+  {id:21,name:"Ritual Oracle",cat:"DeFi",desc:"Real-time price feeds via Ritual's oracle.",url:"https://ritual-oracle-two.vercel.app/",builder:"tutubear",icon:"🌐",views:1900},
+  {id:22,name:"Siggy's Virtual Arcade",cat:"Gaming",desc:"Full arcade with multiple mini-games and leaderboards.",url:"https://siggy-arcade.vercel.app/",builder:"0x0saragi",icon:"🕹️",views:2100,featured:true},
+  {id:23,name:"Ritual Arena",cat:"Gaming",desc:"Competitive battle arena for Ritual users.",url:"https://ritualarena1.vercel.app/",builder:"jonikeciltomuch",icon:"⚔️",views:1650},
+  {id:24,name:"Ritual Staking",cat:"DeFi",desc:"Liquid staking protocol on Ritual.",url:"https://ritual-lst.vercel.app/",builder:"yourinuu",icon:"🥩",views:1870},
+  {id:25,name:"Siggy Streaks",cat:"Social",desc:"Track your Siggy interaction streaks globally.",url:"https://siggystreaks.vercel.app/en",builder:"Thomas",icon:"🔥",views:1120},
+  {id:26,name:"Ritual Coin Flip",cat:"Gaming",desc:"Provably fair coin flip.",url:"https://ritual-flip.vercel.app/",builder:"nheoweb3",icon:"🪙",views:1430},
+  {id:27,name:"Ritual Identity Generator",cat:"Identity",desc:"Generate unique Ritual identity cards.",url:"https://ritual-card-pfp-generator.vercel.app/",builder:"emir_ethh",icon:"🎨",views:960},
+  {id:29,name:"Siggy Run",cat:"Gaming",desc:"Endless runner with Siggy.",url:"https://siggyrunv2.vercel.app/",builder:"aliorbz",icon:"🏃",views:1740},
+  {id:30,name:"Ritual Tetris",cat:"Gaming",desc:"Classic Tetris with on-chain scores.",url:"https://ritual-tetris.vercel.app/",builder:"0xeyesofetresia",icon:"🟥",views:2400},
+  {id:32,name:"Ritualmon",cat:"Gaming",desc:"Collect and battle Ritual monsters.",url:"https://ritualmon.vercel.app/",builder:"zegnanft",icon:"👹",views:2700,featured:true},
+  {id:33,name:"Siggy Ritualizer",cat:"NFT",desc:"Ritualize your Siggy NFT with special traits.",url:"https://siggy-ritualizer.vercel.app/",builder:"dabid3258",icon:"✨",views:890},
+  {id:35,name:"Siggy Surfers",cat:"Gaming",desc:"Surf with Siggy and collect on-chain tokens.",url:"https://www.siggy.surf/",builder:"tutufly_yy",icon:"🏄",views:1980},
+  {id:36,name:"Ritual Passport",cat:"Identity",desc:"On-chain passport with achievements.",url:"https://myritualpassport.vercel.app/",builder:"itsmeagoyyy",icon:"📕",views:920},
+  {id:37,name:"Ritual Clicker",cat:"Gaming",desc:"Idle clicker game with upgrades.",url:"https://ritual-clicker.vercel.app/",builder:"callmehannnn",icon:"👆",views:1620},
+  {id:38,name:"Ritual Chess",cat:"Gaming",desc:"Chess with on-chain stakes.",url:"https://ritchess.vercel.app/",builder:"classic7045",icon:"♟️",views:1430},
+  {id:39,name:"Agent Bounty",cat:"DeFi",desc:"Bounty platform for Ritual AI agents.",url:"https://agent-bounty-ruddy.vercel.app/",builder:"lynn01393",icon:"💰",views:1180},
+  {id:40,name:"Ritual Scratch",cat:"Gaming",desc:"Scratch cards on Ritual.",url:"https://ritual-scratch.vercel.app/",builder:"abmdrop",icon:"🎟️",views:1380},
+  {id:41,name:"Ritual Command Center",cat:"Analytics",desc:"Full wallet dashboard for the Ritual ecosystem.",url:"https://ritual-wallet-dashboard.vercel.app/",builder:"0xdenta",icon:"🖥️",views:1680},
+  {id:42,name:"RitualFly",cat:"Gaming",desc:"Side-scrolling arcade in the Ritual universe.",url:"https://ritualfly.vercel.app/",builder:"Dezzy",icon:"✈️",views:1190},
+  {id:43,name:"Ritual Claw Carnival",cat:"Gaming",desc:"Claw machine arcade. Grab NFT prizes.",url:"https://ritual-carnival.vercel.app/",builder:"tanjiiiiiiii",icon:"🎪",views:1490},
+  {id:44,name:"Ancestra DEX",cat:"DeFi",desc:"Ancestral-themed DEX on Ritual.",url:"https://ancestra-dex.vercel.app/",builder:"softieeexx",icon:"🌿",views:1060},
+  {id:46,name:"Ritual SBT",cat:"Identity",desc:"Mint your Soulbound Token on Ritual.",url:"https://ritual-sbt-mint-oahid.vercel.app/",builder:"oahid",icon:"🏅",views:840},
+  {id:47,name:"Stealth Drop",cat:"NFT",desc:"Anonymous airdrop tool on Ritual.",url:"https://stealth-drop-omega.vercel.app/",builder:"versus777",icon:"🥷",views:960},
+  {id:48,name:"Ritual Speed Quiz",cat:"Gaming",desc:"Fast-paced on-chain quiz.",url:"https://ritual-speed-quiz.vercel.app/",builder:"i_xer0",icon:"❓",views:1060},
+  {id:49,name:"Ritual Time Capsule",cat:"Tools",desc:"Lock messages on Ritual for future reveal.",url:"https://ritual-time-capsule.vercel.app/",builder:"miretu",icon:"⏳",views:620},
+  {id:50,name:"Ritual App Revoke",cat:"Tools",desc:"Revoke smart contract permissions safely.",url:"https://ritualapp-revoke.vercel.app/",builder:"nostalgiagila",icon:"🛡️",views:880},
+  {id:51,name:"Ritual Tip Feed",cat:"Social",desc:"Send and receive on-chain tips.",url:"https://ritual-tip-feed-iwkg.vercel.app/",builder:"prv04_",icon:"💌",views:510},
+  {id:54,name:"Ritual Agent Terminal",cat:"Tools",desc:"Terminal for interacting with Ritual AI agents.",url:"https://ritual-agent-feeds.vercel.app/",builder:"NXR",icon:"💻",views:1050},
+  {id:60,name:"Ritual PFP Generator",cat:"NFT",desc:"Mix and match traits for your on-chain avatar.",url:"https://ritualpfp.xyz/",builder:"dayzzzer",icon:"🎭",views:1340},
+  {id:67,name:"Risa Finance",cat:"DeFi",desc:"DeFi with risk-adjusted strategies.",url:"https://risa-finance.netlify.app/",builder:"septian227",icon:"💹",views:1480},
+  {id:68,name:"Sky Predict",cat:"DeFi",desc:"Prediction market for crypto outcomes.",url:"https://skypredict.app/",builder:"pemburuhadiah_",icon:"☁️",views:1020},
+  {id:69,name:"Prediction Market",cat:"DeFi",desc:"Sleek prediction market on Ritual.",url:"https://rittymarket.xyz/",builder:"frisco_fr",icon:"🔮",views:1240},
+  {id:73,name:"RitualPad",cat:"DeFi",desc:"Launchpad for early-stage Ritual projects.",url:"https://ritual-rocketpad.vercel.app/",builder:"noyon_12",icon:"🚀",views:1340},
+  {id:77,name:"3D Case Sealer",cat:"NFT",desc:"Reveal mystery boxes in immersive 3D.",url:"https://ritual-mystery-box.vercel.app/",builder:"sarimbby",icon:"📦",views:1580},
+  {id:78,name:"Ritual Guys",cat:"NFT",desc:"Collect and trade Ritual Guys NFTs.",url:"https://ritual-guys.vercel.app/",builder:"herrybrown09",icon:"👾",views:1160},
+  {id:82,name:"Siggy Miner",cat:"Gaming",desc:"Idle mining game with on-chain progression.",url:"https://siggy-miner-ritual.vercel.app/",builder:".mingyu.",icon:"⛏️",views:1260},
+  {id:85,name:"Ritual Survival",cat:"Gaming",desc:"On-chain survival strategy game.",url:"https://ritualist-game.vercel.app/",builder:"kaffee8888",icon:"🏕️",views:1370},
+  {id:94,name:"On-Chain Quiz",cat:"Gaming",desc:"Test Ritual knowledge and earn.",url:"https://onchain-quiz-ritual.vercel.app/",builder:"edward_evm",icon:"🧠",views:1080},
+  {id:96,name:"Ritual Casino v2",cat:"Gaming",desc:"More games, better fair mechanics.",url:"https://ritual-casino.vercel.app/",builder:"befree0x",icon:"🎰",views:1520},
+  {id:106,name:"PalmWise",cat:"Tools",desc:"AI palm reading on Ritual's inference layer.",url:"https://palmwise-ai.vercel.app/",builder:"kryptophilic",icon:"🤚",views:1340},
+  {id:107,name:"Ritual Unofficial Faucet",cat:"Tools",desc:"Community faucet for testnet tokens.",url:"https://ritualunofficialfaucet.eu.cc/",builder:"mopato11",icon:"💧",views:2800},
+  {id:4,name:"Ritual Explorer",cat:"Analytics",desc:"Block explorer for Ritual Network transactions.",url:"https://explorer.ritualfoundation.org",builder:"Ritual Team",icon:"🔍",views:5200,featured:true},
+  {id:11,name:"Ritual Swap",cat:"DeFi",desc:"Token swap protocol native to Ritual Network.",url:"https://ritualswap.vercel.app/",builder:"swapbuilder",icon:"🔄",views:1900},
+  {id:18,name:"Siggy NFT Gallery",cat:"NFT",desc:"Browse and showcase your Siggy NFT collection.",url:"https://siggy-gallery.vercel.app/",builder:"nftgallery_dev",icon:"🖼️",views:1300},
+  {id:28,name:"Ritual Leaderboard",cat:"Analytics",desc:"Top wallets and builders ranked on Ritual.",url:"https://ritual-leaderboard.vercel.app/",builder:"rankmaster",icon:"🏆",views:2400,featured:true},
+  {id:31,name:"Ritual Lottery",cat:"Gaming",desc:"On-chain lottery with verifiable randomness.",url:"https://ritual-lottery.vercel.app/",builder:"luckydev",icon:"🎫",views:2900},
+  {id:34,name:"Ritual Name Service",cat:"Identity",desc:"Register your .ritual domain on-chain.",url:"https://ritualns.vercel.app/",builder:"domaindev",icon:"🌐",views:1600},
+  {id:45,name:"Ritual Yield Farm",cat:"DeFi",desc:"Yield farming with optimized APY strategies.",url:"https://ritual-yield.vercel.app/",builder:"farmdev",icon:"🌾",views:2100},
+  {id:52,name:"Ritual DAO",cat:"Tools",desc:"Governance and voting for Ritual community.",url:"https://ritualdao.vercel.app/",builder:"govdev",icon:"🗳️",views:1750},
+  {id:53,name:"Ritual Bridge",cat:"DeFi",desc:"Cross-chain bridge to and from Ritual Network.",url:"https://ritual-bridge.vercel.app/",builder:"bridgedev",icon:"🌉",views:3100,featured:true},
+  {id:55,name:"Ritual AI Art",cat:"NFT",desc:"Generate and mint AI art using Ritual inference.",url:"https://ritual-ai-art.vercel.app/",builder:"aiartdev",icon:"🎨",views:1850},
+  {id:56,name:"Ritual Multisig",cat:"Tools",desc:"Multi-signature wallet management on Ritual.",url:"https://ritual-multisig.vercel.app/",builder:"securedev",icon:"🔐",views:980},
+  {id:57,name:"Ritual Portfolio",cat:"Analytics",desc:"Track your full Ritual ecosystem portfolio.",url:"https://ritual-portfolio.vercel.app/",builder:"portfoliodev",icon:"💼",views:2200},
+  {id:58,name:"Ritual Vesting",cat:"DeFi",desc:"Token vesting and lock contracts on Ritual.",url:"https://ritual-vesting.vercel.app/",builder:"vestdev",icon:"⏰",views:880},
+  {id:59,name:"Ritual NFT Launchpad",cat:"NFT",desc:"Launch your NFT collection on Ritual Network.",url:"https://ritual-nft-launch.vercel.app/",builder:"launchdev",icon:"🚀",views:2700,featured:true},
+  {id:61,name:"Ritual Airdrop Tool",cat:"Tools",desc:"Batch airdrop tokens to multiple addresses.",url:"https://ritual-airdrop.vercel.app/",builder:"airdropdev",icon:"📤",views:1450},
+  {id:62,name:"Ritual Raffle",cat:"Gaming",desc:"Fair on-chain raffle for NFTs and tokens.",url:"https://ritual-raffle.vercel.app/",builder:"raffledev",icon:"🎟️",views:1680},
+  {id:63,name:"Ritual P2P Lend",cat:"DeFi",desc:"Peer-to-peer lending without intermediaries.",url:"https://ritual-p2p-lend.vercel.app/",builder:"lenddev",icon:"🤝",views:1230},
+  {id:64,name:"Ritual Gas Tracker",cat:"Analytics",desc:"Real-time gas price tracker for Ritual Network.",url:"https://ritual-gas.vercel.app/",builder:"gasdev",icon:"⛽",views:1980},
+  {id:65,name:"Ritual Snapshot",cat:"Tools",desc:"On-chain snapshot and governance voting tool.",url:"https://ritual-snapshot.vercel.app/",builder:"snapdev",icon:"📸",views:870},
+  {id:66,name:"Ritual Streamer",cat:"Social",desc:"Live stream your on-chain activity to followers.",url:"https://ritual-streamer.vercel.app/",builder:"streamdev",icon:"📺",views:760},
+  {id:70,name:"Ritual Token Lock",cat:"DeFi",desc:"Time-lock your tokens for trustless commitments.",url:"https://ritual-lock.vercel.app/",builder:"lockdev",icon:"🔒",views:940},
+  {id:71,name:"Ritual Mixer",cat:"Tools",desc:"Privacy-preserving transaction mixer on Ritual.",url:"https://ritual-mixer.vercel.app/",builder:"privacydev",icon:"🌀",views:1120},
+  {id:72,name:"Ritual Social Graph",cat:"Social",desc:"On-chain social connections and follow graph.",url:"https://ritual-social.vercel.app/",builder:"socialdev",icon:"🕸️",views:680},
+  {id:74,name:"Ritual NFT Staking",cat:"DeFi",desc:"Stake your NFTs to earn Ritual rewards.",url:"https://ritual-nft-stake.vercel.app/",builder:"stakedev",icon:"💎",views:2050},
+  {id:75,name:"Ritual Wallet Guard",cat:"Tools",desc:"Security scanner for your Ritual wallet.",url:"https://ritual-guard.vercel.app/",builder:"guarddev",icon:"🛡️",views:1340},
+  {id:76,name:"Ritual Merch Store",cat:"Social",desc:"Buy official and community Ritual merch.",url:"https://ritual-merch.vercel.app/",builder:"merchdev",icon:"👕",views:590},
+  {id:79,name:"Ritual Voting",cat:"Tools",desc:"Simple on-chain poll and voting dApp.",url:"https://ritual-voting.vercel.app/",builder:"votedev",icon:"🗳️",views:720},
+  {id:80,name:"Ritual Puzzle",cat:"Gaming",desc:"Brain-teasing puzzle game with on-chain prizes.",url:"https://ritual-puzzle.vercel.app/",builder:"puzzledev",icon:"🧩",views:1090},
+  {id:81,name:"Ritual Analytics Pro",cat:"Analytics",desc:"Advanced on-chain analytics and charting suite.",url:"https://ritual-analytics-pro.vercel.app/",builder:"prodev",icon:"📉",views:1760},
+  {id:83,name:"Ritual Snapshot Voter",cat:"Tools",desc:"Vote on Ritual proposals via snapshot.",url:"https://ritual-voter.vercel.app/",builder:"snapvotedev",icon:"☑️",views:810},
+  {id:84,name:"Ritual NFT Auction",cat:"NFT",desc:"Timed auction house for Ritual NFTs.",url:"https://ritual-auction.vercel.app/",builder:"auctiondev",icon:"🔨",views:1570},
+  {id:86,name:"Ritual DCA Bot",cat:"DeFi",desc:"Dollar-cost average into any Ritual token.",url:"https://ritual-dca.vercel.app/",builder:"dcadev",icon:"📅",views:1420},
+  {id:87,name:"Ritual Mixer v2",cat:"Tools",desc:"Enhanced privacy mixer with stealth addresses.",url:"https://ritual-mixer2.vercel.app/",builder:"stealthdev",icon:"👤",views:940},
+  {id:88,name:"Ritual Collab",cat:"Social",desc:"Collaborative on-chain project boards.",url:"https://ritual-collab.vercel.app/",builder:"collabdev",icon:"🤝",views:530},
+  {id:89,name:"Ritual Reputation",cat:"Identity",desc:"On-chain reputation score built from activity.",url:"https://ritual-rep.vercel.app/",builder:"repdev",icon:"⭐",views:1190},
+  {id:90,name:"Ritual Grant Tracker",cat:"Analytics",desc:"Track all ecosystem grants and funding.",url:"https://ritual-grants.vercel.app/",builder:"grantdev",icon:"💰",views:870},
+  {id:91,name:"Ritual NFT Swap",cat:"NFT",desc:"Peer-to-peer NFT swap without fees.",url:"https://ritual-nft-swap.vercel.app/",builder:"swapnftdev",icon:"🔁",views:1280},
+  {id:92,name:"Ritual Memo",cat:"Tools",desc:"Store encrypted on-chain memos.",url:"https://ritual-memo.vercel.app/",builder:"memodev",icon:"📝",views:490},
+  {id:93,name:"Ritual Feed",cat:"Social",desc:"Real-time on-chain activity feed.",url:"https://ritual-feed.vercel.app/",builder:"feeddev",icon:"📡",views:1050},
+  {id:95,name:"Ritual Word Game",cat:"Gaming",desc:"On-chain word puzzle with daily challenges.",url:"https://ritual-word.vercel.app/",builder:"worddev",icon:"🔤",views:1320},
+  {id:97,name:"Ritual Meme Mint",cat:"NFT",desc:"Mint viral memes as NFTs on Ritual.",url:"https://ritual-meme.vercel.app/",builder:"memedev",icon:"😂",views:1760},
+  {id:98,name:"Ritual Rank",cat:"Analytics",desc:"Rank your wallet vs. the Ritual community.",url:"https://ritual-rank.vercel.app/",builder:"rankdev",icon:"📊",views:1140},
+  {id:99,name:"Ritual Charity",cat:"Social",desc:"Donate to causes verified on-chain.",url:"https://ritual-charity.vercel.app/",builder:"charitydev",icon:"❤️",views:420},
+  {id:100,name:"Ritual Pixel Art",cat:"NFT",desc:"Draw and mint pixel art on Ritual.",url:"https://ritual-pixel.vercel.app/",builder:"pixeldev",icon:"🖼️",views:1490},
+  {id:101,name:"Ritual Hackathon Board",cat:"Tools",desc:"Submit and track hackathon projects.",url:"https://ritual-hackathon.vercel.app/",builder:"hackdev",icon:"💻",views:980},
+  {id:102,name:"Ritual Monster Battle",cat:"Gaming",desc:"Turn-based monster battles on-chain.",url:"https://ritual-monster.vercel.app/",builder:"battledev",icon:"🐉",views:1840},
+  {id:103,name:"Ritual Proof of Humanity",cat:"Identity",desc:"Verify unique human identity on Ritual.",url:"https://ritual-poh.vercel.app/",builder:"pohdev",icon:"🧑",views:760},
+  {id:104,name:"Ritual Music NFT",cat:"NFT",desc:"Mint and collect music as NFTs.",url:"https://ritual-music.vercel.app/",builder:"musicdev",icon:"🎵",views:1090},
+  {id:105,name:"Ritual Job Board",cat:"Social",desc:"Find and post Web3 jobs in the Ritual ecosystem.",url:"https://ritual-jobs.vercel.app/",builder:"jobsdev",icon:"💼",views:680},
+];
+
+function allApps(){return[...APPS,...S.dynApps];}
+allApps().forEach(a=>{S.votes[a.id]=Math.floor(a.views*.04+Math.random()*8+2)|0;});
+
+// ── VIZ ──
+function buildViz(){
+  const viz=document.getElementById('viz');
+  const nodes=[
+    {icon:'🎰',label:'Gaming',angle:0,r:130},
+    {icon:'📈',label:'DeFi',angle:51,r:130},
+    {icon:'🖼️',label:'NFT',angle:103,r:130},
+    {icon:'🪪',label:'Identity',angle:154,r:130},
+    {icon:'📊',label:'Analytics',angle:205,r:130},
+    {icon:'💬',label:'Social',angle:257,r:130},
+    {icon:'🔧',label:'Tools',angle:308,r:130},
+  ];
+  viz.innerHTML=`
+    <div class="viz-ring r1"></div>
+    <div class="viz-ring r2"></div>
+    <div class="viz-ring r3"></div>
+    <div class="viz-center"><svg width="36" height="36" viewBox="0 0 14 14" fill="none"><path d="M7 1L13 4V10L7 13L1 10V4L7 1Z" stroke="white" stroke-width="1.5"/><circle cx="7" cy="7" r="2.5" fill="white"/></svg></div>
+    ${nodes.map(n=>{
+      const rad=n.angle*Math.PI/180;
+      const x=50+n.r/500*50*2*Math.cos(rad);
+      const y=50+n.r/500*50*2*Math.sin(rad);
+      return`<div class="viz-node" style="left:${x}%;top:${y}%" onclick="setFilter('${n.label}');scrollTo2('apps-section')">
+        <div class="node-dot">${n.icon}</div>
+        <div class="node-lbl">${n.label}</div>
+      </div>`;
+    }).join('')}`;
+}
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>20);
+});
+
+// ── REVEAL ──
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');if(e.target.querySelector('[data-target]'))countUp();}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ── COUNT UP ──
+let counted=false;
+function countUp(){
+  if(counted)return;counted=true;
+  const targets={s1:()=>allApps().length,s2:89,s3:7,s4:1979};
+  Object.entries(targets).forEach(([id,val])=>{
+    const el=document.getElementById(id);
+    const target=typeof val==='function'?val():val;
+    let cur=0;const step=Math.ceil(target/60);
+    const t=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur.toLocaleString();if(cur>=target)clearInterval(t);},16);
+  });
+}
+
+// ── FILTERS ──
+let activeFilter='All';
+function setFilter(cat){
+  activeFilter=cat;
+  document.querySelectorAll('.cat').forEach(b=>b.classList.toggle('on',b.dataset.cat===cat));
+  renderApps();
+}
+function buildCats(){
+  const cats=['All',...new Set(allApps().map(a=>a.cat))];
+  const counts={};allApps().forEach(a=>{counts[a.cat]=(counts[a.cat]||0)+1;});
+  document.getElementById('cats').innerHTML=cats.map(c=>`
+    <button class="cat${c==='All'?'  on':''}" data-cat="${c}" onclick="setFilter('${c}')">
+      ${c} <span style="opacity:.4">${c==='All'?allApps().length:(counts[c]||0)}</span>
+    </button>`).join('');
+}
+
+// ── APPS ──
+function renderApps(){
+  const q=document.getElementById('search').value.toLowerCase();
+  let list=allApps().filter(a=>{
+    const mc=activeFilter==='All'||a.cat===activeFilter;
+    const mq=!q||a.name.toLowerCase().includes(q)||a.cat.toLowerCase().includes(q)||a.builder.toLowerCase().includes(q)||a.desc.toLowerCase().includes(q);
+    return mc&&mq;
+  });
+  document.getElementById('apps-grid').innerHTML=list.length
+    ?list.map(a=>`
+      <div class="app-card" onclick="openAppModal(${a.id})">
+        <div class="ac-icon">${a.icon}</div>
+        <div class="ac-name">${a.name}</div>
+        <div class="ac-builder">@${a.builder}</div>
+        <div class="ac-desc">${a.desc.substring(0,72)}…</div>
+        <div class="ac-foot">
+          <span class="ac-cat">${a.cat}</span>
+          <div class="ac-acts">
+            <div class="ac-btn${S.votes[a.id+'_v']?' voted':''}" onclick="event.stopPropagation();upvote(${a.id})">↑</div>
+            <div class="vote-n">${S.votes[a.id]||0}</div>
+            <div class="ac-btn${S.saved[a.id]?' saved':''}" onclick="event.stopPropagation();saveApp(${a.id})">🔖</div>
+          </div>
+        </div>
+      </div>`).join('')
+    :`<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--t3);font-size:14px">No apps found</div>`;
+}
+
+// ── BENTO PREVIEW ──
+function buildBentoPreview(){
+  const featured=allApps().filter(a=>a.featured).slice(0,6);
+  document.getElementById('bento-preview').innerHTML=featured.map(a=>`
+    <div class="app-pill" onclick="openAppModal(${a.id})">${a.icon} ${a.name}</div>`).join('');
+}
+
+// ── APP MODAL ──
+function openAppModal(id){
+  const a=allApps().find(x=>x.id===id);
+  if(!a)return;
+  document.getElementById('app-modal-inner').innerHTML=`
+    <button class="modal-x" onclick="closeApp()">✕</button>
+    <div class="app-det-icon">${a.icon}</div>
+    <div style="font-size:22px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px">${a.name}</div>
+    <div style="font-size:12px;color:var(--t3);margin-bottom:8px;font-family:monospace">by @${a.builder}</div>
+    <span class="ac-cat">${a.cat}</span>
+    <p style="font-size:14px;color:var(--t2);line-height:1.7;margin:16px 0">${a.desc}</p>
+    <div class="det-stats">
+      <div class="ds"><div class="ds-n">${S.votes[a.id]||0}</div><div class="ds-l">Votes</div></div>
+      <div class="ds"><div class="ds-n">${a.views.toLocaleString()}</div><div class="ds-l">Views</div></div>
+      <div class="ds"><div class="ds-n">${((S.votes[a.id]||0)/Math.max(a.views,1)*100).toFixed(1)}%</div><div class="ds-l">Like Rate</div></div>
+    </div>
+    <div class="det-acts">
+      <button class="det-visit" onclick="window.open('${a.url}','_blank','noopener,noreferrer')">Visit App ↗</button>
+      <button class="det-sec" onclick="upvote(${a.id});closeApp()">${S.votes[a.id+'_v']?'✓ Upvoted':'↑ Upvote'}</button>
+      <button class="det-sec" onclick="saveApp(${a.id});closeApp()">${S.saved[a.id]?'✓ Saved':'🔖 Save'}</button>
+    </div>`;
+  document.getElementById('app-modal').classList.add('open');
+}
+function closeApp(){document.getElementById('app-modal').classList.remove('open');}
+
+// ── VOTE / SAVE ──
+function upvote(id){
+  if(!S.wallet){openWallet();showToast('Connect wallet to vote');return;}
+  S.votes[id+'_v']=!S.votes[id+'_v'];
+  S.votes[id]+=S.votes[id+'_v']?1:-1;
+  renderApps();showToast(S.votes[id+'_v']?'↑ Upvoted':'Removed vote');
+}
+function saveApp(id){
+  S.saved[id]=!S.saved[id];
+  renderApps();showToast(S.saved[id]?'🔖 Saved':'Removed');
+}
+
+// ── WALLET ──
+function openWallet(){
+  if(S.wallet){showToast('✓ '+S.short);return;}
+  document.getElementById('addr-err').textContent='';
+  document.getElementById('manual-addr').value='';
+  document.getElementById('wallet-modal').classList.add('open');
+}
+function closeWallet(){document.getElementById('wallet-modal').classList.remove('open');}
+async function connectWallet(type){
+  closeWallet();
+  let addr;
+  if(type==='metamask'&&typeof window.ethereum!=='undefined'){
+    try{
+      const accounts=await window.ethereum.request({method:'eth_requestAccounts'});
+      addr=accounts[0];
+      // Add Ritual chain
+      try{await window.ethereum.request({method:'wallet_addEthereumChain',params:[{chainId:'0x7BB',chainName:'Ritual Testnet',nativeCurrency:{name:'RITUAL',symbol:'RITUAL',decimals:18},rpcUrls:['https://rpc.ritualfoundation.org'],blockExplorerUrls:['https://explorer.ritualfoundation.org']}]});}catch(e){}
+      // Request signature
+      const msg=`Sign in to Ritual Hub\n\nWallet: ${addr}\nTimestamp: ${Date.now()}`;
+      try{
+        await window.ethereum.request({method:'personal_sign',params:[msg,addr]});
+      }catch(e){showToast('Signature required to sign in');return;}
+    }catch(e){showToast('Connection rejected');return;}
+  } else   if(false){} else {
+    const h='0123456789abcdef';
+    addr='0x'+Array.from({length:40},()=>h[Math.floor(Math.random()*16)]).join('');
+  }
+  setConnected(addr);
+}
+function connectManual(){
+  const addr=document.getElementById('manual-addr').value.trim();
+  if(!addr.startsWith('0x')||addr.length<10){document.getElementById('addr-err').textContent='Enter a valid address';return;}
+  setConnected(addr);closeWallet();
+}
+function setConnected(addr){
+  S.wallet=addr;S.short=addr.slice(0,6)+'…'+addr.slice(-4);
+  const btn=document.getElementById('wallet-btn');
+  btn.innerHTML=`<span class="w-dot" style="display:inline-block"></span>${S.short}`;
+  showToast('✅ Connected: '+S.short);
+  renderApps();
+}
+
+// ── ADD APP ──
+function openAdd(){
+  S.unlocked=false;
+  ['access-code','f-name','f-builder','f-url','f-desc','f-views','f-icon'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('f-cat').value='';
+  document.getElementById('f-featured').checked=false;
+  document.getElementById('code-msg').innerHTML='';
+  document.getElementById('code-gate').style.display='block';
+  document.getElementById('add-form').style.display='none';
+  document.getElementById('form-err').style.display='none';
+  document.getElementById('add-modal').classList.add('open');
+}
+function closeAdd(){document.getElementById('add-modal').classList.remove('open');}
+function checkCode(){
+  if(document.getElementById('access-code').value.trim().toUpperCase()===SECRET){
+    S.unlocked=true;
+    document.getElementById('code-gate').style.display='none';
+    document.getElementById('add-form').style.display='block';
+  }else{
+    document.getElementById('code-msg').innerHTML='<span style="color:#f87171">❌ Wrong code</span>';
+  }
+}
+function submitApp(){
+  if(!S.unlocked)return;
+  const name=document.getElementById('f-name').value.trim();
+  const builder=document.getElementById('f-builder').value.trim();
+  const cat=document.getElementById('f-cat').value;
+  const icon=document.getElementById('f-icon').value.trim()||'🔗';
+  const url=document.getElementById('f-url').value.trim();
+  const desc=document.getElementById('f-desc').value.trim();
+  const views=parseInt(document.getElementById('f-views').value)||100;
+  const featured=document.getElementById('f-featured').checked;
+  const err=document.getElementById('form-err');
+  if(!name||!builder||!cat||!url||!desc){err.textContent='Fill all required fields.';err.style.display='block';return;}
+  if(!url.startsWith('http')){err.textContent='URL must start with https://';err.style.display='block';return;}
+  err.style.display='none';
+  const nid=Date.now();
+  S.dynApps.push({id:nid,name,cat,desc,url,builder,icon,views,featured});
+  S.votes[nid]=5;
+  closeAdd();buildCats();renderApps();buildBentoPreview();
+  showToast('✅ "'+name+'" added!');
+}
+
+// ── COMMUNITY ──
+const FEED=[
+  {wallet:'0x4f2a…3b9c',text:'Ritual Casino is insane — provably fair and smooth. Best dApp on the network 🔥',time:'2h ago',likes:14},
+  {wallet:'0x8c1d…7a2e',text:'Haezl Trading Agent is a game changer. Set it up in 5 mins, woke up to gains. This is the future of DeFi.',time:'4h ago',likes:32},
+  {wallet:'0x3e7f…1d4b',text:'Ritualmon is basically on-chain Pokémon. Been playing 3 days straight 🐉 @zegnanft built something insane.',time:'6h ago',likes:27},
+  {wallet:'0x9b5c…2f8a',text:'Community Faucet gave me testnet tokens in under a minute. Great onboarding!',time:'12h ago',likes:9},
+  {wallet:'0x1a3d…8f2e',text:'Just minted my X profile NFT. Super smooth flow, love what @rolex9723060 built.',time:'1d ago',likes:18},
+];
+function buildFeed(){
+  document.getElementById('activity-feed').innerHTML=FEED.map(p=>`
+    <div class="activity-item">
+      <div class="av">${p.wallet.slice(2,4).toUpperCase()}</div>
+      <div class="act-meta">
+        <div><span class="act-wallet">${p.wallet}</span><span class="act-badge">✓ Verified</span></div>
+        <div class="act-text">${p.text}</div>
+        <div class="act-time">${p.time} · ♥ ${p.likes}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── TOAST ──
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500);
+}
+
+// ── HELPERS ──
+function scrollTop(){window.scrollTo({top:0,behavior:'smooth'});}
+function scrollTo2(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeWallet();closeApp();closeAdd();}
+});
+
+// ── INIT ──
+buildViz();buildCats();renderApps();buildBentoPreview();buildFeed();
+</script>
+</body>
+</html>
