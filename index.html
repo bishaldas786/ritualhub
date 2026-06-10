@@ -1,142 +1,3 @@
-DEATHLESS ./
-deathless_27
-Invisible
-
-DEATHLESS ./ [RBM],  — Yesterday at 10:19 PM
-@Pawan bhai
-Mbl ma acha se work nahi karrha ha
-Eska solution without desktop ka
- [RBM], 
-Pawan — Yesterday at 10:37 PM
-mobile k lie to claude ko bolna pdega lekin fir vo saare code change krega to rhne do 
-Bhut website sirf pc m hi shi lgti h
-DEATHLESS ./ [RBM],  — Yesterday at 10:42 PM
-Ok
-DEATHLESS ./ [RBM],  — 12:40 AM
-Forwarded
-
-250$ floor tha
-2.22 eth fees dediya
-Etna amir kon ha bhai
- [RBM], 
-SINGH_SAHAB [IP],  — 5:27 AM
-Lol 😂
- [RBM], 
-SINGH_SAHAB [IP],  — 5:27 AM
-Ye bot wagara chutiyapa hai bc 😂
-🤣
-Pawan — 8:59 AM
-ese to build m bhi fud ajana jse kaito, dc, testnet m aya
-
-DEATHLESS ./ [RBM],  — 9:55 AM
-Yo
-https://claude.ai/public/artifacts/ff819990-1cf2-437f-9937-c5d040990fa9
-Claude
-Ritual Hub v4 — App Directory & Ecosystem Explorer
-Discover apps, agents & protocols built on Ritual Network. Browse the complete directory, explore the ecosystem, and submit your project to get discovered.
-Ritual Hub v4 — Full Upgrade
-Ye dhako to kaisa Lagrah ha
-@Pawan
-@Pawan bhai isma or ak feature lau kiya jider user like x username se login karka feedback de sakta ha 
-For any dapps or other resources they needd for them ?
- [RBM], 
-Pawan — 10:05 AM
-ye jyda bdia h
-DEATHLESS ./ [RBM],  — 10:05 AM
-Ok
- [RBM], 
-DEATHLESS ./ [RBM],  — 10:05 AM
-@Pawan check karo
-Isko
- [RBM], 
-Pawan — 10:06 AM
-Isi ko to dekha
-DEATHLESS ./ [RBM],  — 10:06 AM
-Acha
- [RBM], 
-DEATHLESS ./ [RBM],  — 10:06 AM
-Or ya ?
-To user intrest show karaga
-Na ?
-Or unko ye barbar use karna hoga :FunnyHaha:
-Mod logoo ko
-Wait karo result dhika ta hu
-Uska bad ma firse vercal ma dalunga firse
-Apka sat
- [RBM], 
-Pawan — 10:08 AM
-Comment ka option daldo saare ai ki niche jha p log click kre to ek popup aae aur usme 2 blocks ho 
-Twitter Username 
-(User twitter username) 
-Feedback
-(User Write comment/feedback)
-DEATHLESS ./ [RBM],  — 10:09 AM
-Ok
-DEATHLESS ./ [RBM],  — 10:27 AM
-https://claude.ai/public/artifacts/61e856bc-9588-45a5-8259-0a16970c4648
-Claude
-Ritual Hub — Web3 Ecosystem Community Platform
-Discover apps, builders, and resources on Ritual Network. Explore the ecosystem, submit projects, and engage with the community in one platform.
-Ritual Hub v3
-@Pawan sir check
-DEATHLESS ./
- started a call that lasted 14 minutes. — 10:27 AM
- [RBM], 
-Pawan — 10:27 AM
-ruko mere light ni h
-DEATHLESS ./ [RBM],  — 10:28 AM
-acha pk
-ok
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ritual Hub — Ecosystem Community Platform</title>... (30 KB left)
-
-Ritual Hub v3.html
-80 KB
-DEATHLESS ./ [RBM],  — 10:38 AM
-https://ritualhub1.vercel.app/
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ritual Hub — Ecosystem Community Platform</title>... (32 KB left)
-
-Ritual Hub v3.html
-82 KB
- [RBM], 
-Pawan — 10:43 AM
-krdi n glti
-fake api daldia x ka
-tbhi bola tha connect x na dala authorize chaie hota api k through
-DEATHLESS ./ [RBM],  — 10:43 AM
-Mane user name k through kardiya
-Pawan — 10:43 AM
-tbhi sirf popup dalana tha no signup bs aao feedback do khud dalenge vo log apna username
-DEATHLESS ./
- started a call. — 10:43 AM
-DEATHLESS ./ [RBM],  — 10:46 AM
-awaz?
-?
-https://claude.ai/public/artifacts/8402a157-d725-4bbc-a4d8-38bdf069303b
-Claude
-Ritual Hub — Web3 Ecosystem Community Platform
-Discover apps, builders, and resources on Ritual Network. Explore the ecosystem, submit projects, and engage with the community in one platform.
-Ritual Hub v3
-DEATHLESS ./ [RBM],  — 11:05 AM
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Ritual Hub</title>... (21 KB left)
-
-Ritual Hub v3 - Fixed.html
-71 KB
-﻿
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -637,6 +498,352 @@ function countUp(id,end,dur){
 
 // ── DIRECTORY ───────────────────────────────────────────────
 var dirFilter='All';
-function renderDir(... (21 KB left)
-Ritual Hub v3 - Fixed.html
-71 KB
+function renderDir(){
+  var cats=['All'];
+  var cnt={};
+  for(var i=0;i<APPS.length;i++){
+    if(cats.indexOf(APPS[i].cat)===-1)cats.push(APPS[i].cat);
+    cnt[APPS[i].cat]=(cnt[APPS[i].cat]||0)+1;
+  }
+  var catHtml=cats.map(function(c){
+    return '<button class="cat'+(c===dirFilter?' on':'')+'" onclick="dirFilter=\''+c+'\';renderDir()">'+c+' <span style="opacity:.35">'+(c==='All'?APPS.length:cnt[c]||0)+'</span></button>';
+  }).join('');
+
+  var srch=document.getElementById('dir-srch');
+  var q=srch?srch.value.toLowerCase():'';
+  var list=APPS.filter(function(a){
+    return(dirFilter==='All'||a.cat===dirFilter)&&(!q||a.name.toLowerCase().indexOf(q)>=0||a.builder.toLowerCase().indexOf(q)>=0||a.desc.toLowerCase().indexOf(q)>=0);
+  });
+
+  var gridHtml=list.length?list.map(function(a,i){
+    return '<div class="ac'+(a.feat?' feat':'')+'" onclick="openApp('+a.id+')" style="animation:fu .3s '+(Math.min(i*.02,.4))+'s both">'
+      +'<div class="ac-feat-badge">FEATURED</div>'
+      +'<div class="ac-ic">'+a.icon+'</div>'
+      +'<div class="ac-nm">'+a.name+'</div>'
+      +'<div class="ac-by">@'+a.builder+'</div>'
+      +'<div class="ac-ds">'+a.desc+'</div>'
+      +'<div class="ac-ft">'
+      +'<span class="ac-tag">'+a.cat+'</span>'
+      +'<div class="ac-acts">'
+      +'<div class="acb'+(ST.voted[a.id]?' vd':'')+'" onclick="event.stopPropagation();vote('+a.id+')">↑</div>'
+      +'<div class="vn">'+(ST.votes[a.id]||0)+'</div>'
+      +'<div class="acb'+(ST.saved[a.id]?' sv':'')+'" onclick="event.stopPropagation();saveApp('+a.id+')">🔖</div>'
+      +'</div></div></div>';
+  }).join(''):'<div style="grid-column:1/-1"><div class="empty"><div class="empty-icon">🔍</div><div class="empty-h">No apps found</div><div class="empty-p">Try a different search or category.</div></div></div>';
+
+  document.getElementById('page-directory').innerHTML=
+    '<section class="sec">'
+    +'<div class="sec-label">App Directory</div>'
+    +'<div class="sec-h">All Apps<br><span class="dim">on Ritual.</span></div>'
+    +'<div class="srch-wrap"><span class="srch-ico">🔍</span>'
+    +'<input class="srch-in" id="dir-srch" placeholder="Search apps, builders…" oninput="renderDir()" value="'+q+'" autocomplete="off">'
+    +'</div>'
+    +'<div class="cats">'+catHtml+'</div>'
+    +'<div class="g3">'+gridHtml+'</div>'
+    +'</section>';
+}
+
+function vote(id){
+  ST.voted[id]=!ST.voted[id];
+  ST.votes[id]+=ST.voted[id]?1:-1;
+  renderDir();
+  showToast(ST.voted[id]?'↑ Upvoted!':'Vote removed');
+}
+function saveApp(id){
+  ST.saved[id]=!ST.saved[id];
+  renderDir();
+  showToast(ST.saved[id]?'🔖 Saved':'Removed from saved');
+}
+
+function openApp(id){
+  var a=null;
+  for(var i=0;i<APPS.length;i++){if(APPS[i].id===id){a=APPS[i];break;}}
+  if(!a)return;
+  document.getElementById('app-mod').innerHTML=
+    '<button class="mod-x" onclick="closeOv(\'app-ov\')">✕</button>'
+    +'<div style="font-size:36px;margin-bottom:12px">'+a.icon+'</div>'
+    +'<div style="font-size:20px;font-weight:800;margin-bottom:3px">'+a.name+'</div>'
+    +'<div style="font-size:11px;color:var(--t3);font-family:monospace;margin-bottom:8px">by @'+a.builder+'</div>'
+    +'<span class="sb sb-c">'+a.cat+'</span>'
+    +'<p style="font-size:13.5px;color:var(--t2);line-height:1.7;margin:14px 0">'+a.desc+'</p>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">'
+    +'<div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:800">'+(ST.votes[a.id]||0)+'</div><div style="font-size:9.5px;color:var(--t3);text-transform:uppercase;margin-top:2px">Votes</div></div>'
+    +'<div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:800">'+(a.views/1000).toFixed(1)+'k</div><div style="font-size:9.5px;color:var(--t3);text-transform:uppercase;margin-top:2px">Views</div></div>'
+    +'<div style="background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:800">'+(a.feat?'⭐':'—')+'</div><div style="font-size:9.5px;color:var(--t3);text-transform:uppercase;margin-top:2px">'+(a.feat?'Featured':'Listed')+'</div></div>'
+    +'</div>'
+    +'<div style="display:flex;gap:8px;flex-wrap:wrap">'
+    +'<button class="btn btn-pri" onclick="window.open(\''+a.url+'\',\'_blank\',\'noopener\')">Visit App ↗</button>'
+    +'<button class="btn btn-sec" onclick="vote('+a.id+')">↑ Upvote</button>'
+    +'<button class="btn btn-sec" onclick="saveApp('+a.id+')">🔖 Save</button>'
+    +'</div>';
+  document.getElementById('app-ov').classList.add('open');
+}
+
+// ── ECOSYSTEM ───────────────────────────────────────────────
+function renderEco(){
+  var nodes=[
+    {icon:'🎰',label:'Gaming',angle:0,r:172},
+    {icon:'📈',label:'DeFi',angle:51,r:172},
+    {icon:'🖼️',label:'NFT',angle:103,r:172},
+    {icon:'🪪',label:'Identity',angle:154,r:172},
+    {icon:'📊',label:'Analytics',angle:205,r:172},
+    {icon:'💬',label:'Social',angle:257,r:172},
+    {icon:'🔧',label:'Tools',angle:308,r:172}
+  ];
+  function cnt(c){var n=0;for(var i=0;i<APPS.length;i++){if(APPS[i].cat===c)n++;}return n;}
+
+  var viz='<div class="ev-ring r1"></div><div class="ev-ring r2"></div><div class="ev-ring r3"></div>'
+    +'<div class="ev-center" onclick="showPage(\'directory\')">'
+    +'<svg width="34" height="34" viewBox="0 0 30 30" fill="none"><path d="M15 2L28 8.5V21.5L15 28L2 21.5V8.5L15 2Z" stroke="white" stroke-width="1.3" fill="rgba(255,255,255,.12)"/><circle cx="15" cy="15" r="5" fill="white"/></svg>'
+    +'</div>';
+
+  for(var i=0;i<nodes.length;i++){
+    var n=nodes[i];
+    var rad=n.angle*Math.PI/180;
+    var px=50+n.r/440*100*Math.cos(rad);
+    var py=50+n.r/440*100*Math.sin(rad);
+    viz+='<div class="ev-node" style="left:'+px+'%;top:'+py+'%" onclick="dirFilter=\''+n.label+'\';showPage(\'directory\')">'
+      +'<div class="ev-dot">'+n.icon+'</div>'
+      +'<div class="ev-lbl">'+n.label+'</div>'
+      +'<div class="ev-cnt">'+cnt(n.label)+'</div>'
+      +'</div>';
+  }
+
+  var legend='<div class="eco-legend">'+nodes.map(function(n){
+    return '<div class="elr" onclick="dirFilter=\''+n.label+'\';showPage(\'directory\')">'
+      +'<span style="font-size:16px;width:24px;text-align:center">'+n.icon+'</span>'
+      +'<span class="elr-nm">'+n.label+'</span>'
+      +'<span class="elr-cnt">'+cnt(n.label)+' apps →</span>'
+      +'</div>';
+  }).join('')+'</div>';
+
+  document.getElementById('page-ecosystem').innerHTML=
+    '<section class="sec"><div class="eco-wrap">'
+    +'<div><div class="sec-label">Ecosystem</div><div class="sec-h">Built on<br><span class="dim">Ritual.</span></div>'
+    +'<p class="sec-p">Every corner of the Ritual universe. Click a node to explore.</p>'+legend+'</div>'
+    +'<div class="eco-viz">'+viz+'</div>'
+    +'</div></section>';
+}
+
+// ── REQUESTS ────────────────────────────────────────────────
+var RQTYPES=['All','DApp','Documentation','Tutorial','Faucet','Dev Tool','AI Resource'];
+function renderRequests(){
+  var tabs=RQTYPES.map(function(t){
+    return '<button class="tab'+(t===ST.rqFilter?' on':'')+'" onclick="ST.rqFilter=\''+t+'\';renderRequests()">'+t+'</button>';
+  }).join('');
+
+  var list=ST.requests.filter(function(r){return ST.rqFilter==='All'||r.type===ST.rqFilter;});
+  list.sort(function(a,b){return b.votes-a.votes;});
+
+  var listHtml=list.length?list.map(function(r){
+    return '<div class="gc" style="padding:18px;display:flex;gap:12px">'
+      +'<div style="display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;padding-top:2px">'
+      +'<button class="rc-vbtn'+(r.myVote?' voted':'')+'" onclick="voteRq(\''+r.id+'\')">▲<br>'+r.votes+'</button>'
+      +'</div>'
+      +'<div style="flex:1;min-width:0">'
+      +'<div style="font-size:14px;font-weight:600;margin-bottom:4px">'+r.title+'</div>'
+      +'<div style="font-size:12.5px;color:var(--t2);line-height:1.6;margin-bottom:8px">'+r.desc+'</div>'
+      +'<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">'
+      +'<span class="sb sb-c">'+r.type+'</span>'
+      +'<span class="sb sb-r">Under Review</span>'
+      +'<span style="font-size:11px;color:var(--t3);margin-left:auto;font-family:monospace">'+r.user+'</span>'
+      +'</div></div></div>';
+  }).join(''):'<div class="empty"><div class="empty-icon">📋</div><div class="empty-h">No requests yet</div><div class="empty-p">Be the first to request a new resource for the community.</div></div>';
+
+  var form='<div style="padding:20px">'
+    +'<div style="font-size:15px;font-weight:700;margin-bottom:4px">New Request</div>'
+    +'<div style="font-size:12.5px;color:var(--t2);margin-bottom:16px">Request a resource for the community.</div>'
+    +'<div class="fg"><label class="fl2">Type</label><select class="fs" id="rq-type"><option>DApp</option><option>Documentation</option><option>Tutorial</option><option>Faucet</option><option>Dev Tool</option><option>AI Resource</option></select></div>'
+    +'<div class="fg"><label class="fl2">Title *</label><input class="fi2" id="rq-title" placeholder="e.g. DEX aggregator on Ritual"></div>'
+    +'<div class="fg"><label class="fl2">Why is this needed? *</label><textarea class="fta" id="rq-desc" placeholder="Why does the community need this?"></textarea></div>'
+    +'<div class="ferr" id="rq-err"></div>'
+    +'<button class="btn btn-pri" style="width:100%;margin-top:4px" onclick="submitRq()">Submit Request →</button>'
+    +'</div>';
+
+  document.getElementById('page-requests').innerHTML=
+    '<section class="sec">'
+    +'<div class="sec-label">Resource Requests</div>'
+    +'<div class="sec-h">Request &<br><span class="dim">Upvote.</span></div>'
+    +'<p class="sec-p">Request new dApps, docs, tutorials, tools. Community votes decide priority.</p>'
+    +'<div class="two-col">'
+    +'<div><div class="tabs">'+tabs+'</div><div class="glist">'+listHtml+'</div></div>'
+    +'<div class="gc">'+form+'</div>'
+    +'</div></section>';
+}
+
+function submitRq(){
+  var t=(document.getElementById('rq-title')||{}).value;
+  var d=(document.getElementById('rq-desc')||{}).value;
+  var type=(document.getElementById('rq-type')||{}).value;
+  var err=document.getElementById('rq-err');
+  t=(t||'').trim();d=(d||'').trim();
+  if(!t||!d){if(err){err.textContent='Please fill all fields.';err.style.display='block';}return;}
+  if(err)err.style.display='none';
+  ST.requests.push({id:Date.now()+'',user:'@anonymous',type:type||'DApp',title:t,desc:d,votes:1,myVote:true});
+  renderRequests();showToast('✅ Request submitted!');
+}
+
+function voteRq(id){
+  for(var i=0;i<ST.requests.length;i++){
+    if(ST.requests[i].id===id){
+      ST.requests[i].myVote=!ST.requests[i].myVote;
+      ST.requests[i].votes+=ST.requests[i].myVote?1:-1;
+      break;
+    }
+  }
+  renderRequests();
+}
+
+// ── REVIEWS ─────────────────────────────────────────────────
+function renderReviews(){
+  var listHtml=ST.reviews.length?ST.reviews.slice().reverse().map(function(r){
+    var stars='';
+    for(var i=1;i<=5;i++){stars+='<span style="color:'+(i<=r.rating?'#fbbf24':'rgba(240,253,244,.08)')+';font-size:13px">★</span>';}
+    return '<div class="gc" style="padding:18px;display:flex;flex-direction:column;gap:9px">'
+      +'<div style="display:flex;align-items:center;gap:10px">'
+      +'<div class="fi-av">'+r.user.slice(1,3).toUpperCase()+'</div>'
+      +'<div><div class="fi-w">'+r.user+'</div><div class="fi-tm">'+r.time+'</div></div>'
+      +'</div>'
+      +'<div style="display:flex;align-items:center;gap:8px">'+stars+'<span style="font-size:11px;color:var(--t3);margin-left:4px">'+r.app+'</span></div>'
+      +'<div style="font-size:14px;font-weight:600">'+r.title+'</div>'
+      +'<div style="font-size:13px;color:var(--t2);line-height:1.65">'+r.body+'</div>'
+      +'<button class="btn-upvote'+(r.myVote?' voted':'')+'" style="width:fit-content" onclick="voteRv(\''+r.id+'\')">👍 Helpful ('+r.helpful+')</button>'
+      +'</div>';
+  }).join(''):'<div class="empty"><div class="empty-icon">⭐</div><div class="empty-h">No reviews yet</div><div class="empty-p">Be the first to review a Ritual dApp and help the community.</div></div>';
+
+  var slots=MAX_PUB-ST.publishers.length;
+  var isPublisher=ST.publishers.indexOf('publisher')>=0||ST.codeVerified;
+
+  var formHtml;
+  if(!isPublisher){
+    var slotRows='';
+    for(var i=0;i<ST.publishers.length;i++){slotRows+='<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--bdr);font-size:12px"><div class="fi-av" style="width:24px;height:24px;font-size:9px">PB</div><span style="color:var(--t2)">Publisher #'+(i+1)+'</span><span style="margin-left:auto;color:var(--g);font-size:10px">Active</span></div>';}
+    for(var i=0;i<slots;i++){slotRows+='<div style="padding:8px 12px;font-size:11px;color:var(--t4);border-bottom:1px solid var(--bdr)">— open slot —</div>';}
+    formHtml='<div style="padding:22px">'
+      +'<div style="font-size:15px;font-weight:700;margin-bottom:4px">🔐 Publisher Access</div>'
+      +'<div style="font-size:12.5px;color:var(--t2);margin-bottom:6px;line-height:1.65">Only <strong style="color:var(--g)">'+MAX_PUB+' publishers</strong> allowed. <span style="color:var(--warn)">'+slots+' slot'+(slots===1?'':'s')+' remaining.</span><br>Enter your access code to unlock.</div>'
+      +'<div class="fg" style="margin-top:14px"><label class="fl2">Access Code</label>'
+      +'<input class="fi2" id="pub-code" placeholder="Enter code…" type="password" onkeydown="if(event.key===\'Enter\')verifyCode()">'
+      +'</div>'
+      +'<div class="ferr" id="code-err" style="margin-bottom:8px"></div>'
+      +'<button class="btn btn-pri" style="width:100%" onclick="verifyCode()">Unlock Access →</button>'
+      +'<div style="font-size:11px;color:var(--t3);margin-top:10px;text-align:center">'+(MAX_PUB-slots)+'/'+MAX_PUB+' slots used</div>'
+      +'<div style="margin-top:16px;background:rgba(255,255,255,.03);border:1px solid var(--bdr);border-radius:10px;overflow:hidden">'+slotRows+'</div>'
+      +'</div>';
+  } else {
+    var opts=APPS.slice(0,20).map(function(a){return '<option>'+a.name+'</option>';}).join('');
+    formHtml='<div style="padding:20px">'
+      +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">'
+      +'<div style="font-size:15px;font-weight:700">Leave a Review</div>'
+      +'<span class="sb sb-a" style="margin-left:auto">✓ Publisher</span>'
+      +'</div>'
+      +'<div class="fg"><label class="fl2">App</label><select class="fs" id="rv-app">'+opts+'</select></div>'
+      +'<div class="fg"><label class="fl2">Rating</label><div style="display:flex;gap:4px" id="rv-stars">'
+      +'<button class="star-btn" id="rs-1" onclick="setRating(1)">★</button>'
+      +'<button class="star-btn" id="rs-2" onclick="setRating(2)">★</button>'
+      +'<button class="star-btn" id="rs-3" onclick="setRating(3)">★</button>'
+      +'<button class="star-btn" id="rs-4" onclick="setRating(4)">★</button>'
+      +'<button class="star-btn" id="rs-5" onclick="setRating(5)">★</button>'
+      +'</div></div>'
+      +'<div class="fg"><label class="fl2">Title *</label><input class="fi2" id="rv-title" placeholder="One-line summary…"></div>'
+      +'<div class="fg"><label class="fl2">Review *</label><textarea class="fta" id="rv-body" placeholder="Your honest experience…"></textarea></div>'
+      +'<div class="ferr" id="rv-err"></div>'
+      +'<button class="btn btn-pri" style="width:100%;margin-top:4px" onclick="submitRv()">Publish Review →</button>'
+      +'</div>';
+  }
+
+  document.getElementById('page-reviews').innerHTML=
+    '<section class="sec">'
+    +'<div class="sec-label">DApp Reviews</div>'
+    +'<div class="sec-h">Community<br><span class="dim">Reviews.</span></div>'
+    +'<p class="sec-p">Real experiences from real users.</p>'
+    +'<div class="two-col">'
+    +'<div class="glist">'+listHtml+'</div>'
+    +'<div class="gc">'+formHtml+'</div>'
+    +'</div></section>';
+
+  if(isPublisher){
+    for(var i=1;i<=5;i++){
+      var b=document.getElementById('rs-'+i);
+      if(b)b.classList.toggle('on',i<=ST.curRating);
+    }
+  }
+}
+
+function verifyCode(){
+  var val=(document.getElementById('pub-code')||{}).value;
+  val=(val||'').trim();
+  var err=document.getElementById('code-err');
+  if(!val){if(err){err.textContent='Enter the access code.';err.style.display='block';}return;}
+  if(val!==SECRET_CODE){if(err){err.textContent='❌ Wrong code. Try again.';err.style.display='block';}return;}
+  if(ST.publishers.length>=MAX_PUB){if(err){err.textContent='❌ All slots are full.';err.style.display='block';}return;}
+  ST.publishers.push('publisher');
+  ST.codeVerified=true;
+  renderReviews();
+  showToast('🎉 Publisher access granted! ('+ST.publishers.length+'/'+MAX_PUB+')');
+}
+
+function setRating(r){
+  ST.curRating=r;
+  for(var i=1;i<=5;i++){var b=document.getElementById('rs-'+i);if(b)b.classList.toggle('on',i<=r);}
+}
+
+function submitRv(){
+  var t=(document.getElementById('rv-title')||{}).value;
+  var b=(document.getElementById('rv-body')||{}).value;
+  var app=(document.getElementById('rv-app')||{}).value;
+  var err=document.getElementById('rv-err');
+  t=(t||'').trim();b=(b||'').trim();
+  if(!t||!b){if(err){err.textContent='Please fill all fields.';err.style.display='block';}return;}
+  if(!ST.curRating){if(err){err.textContent='Please select a rating.';err.style.display='block';}return;}
+  if(err)err.style.display='none';
+  ST.reviews.push({id:Date.now()+'',user:'@publisher',app:app,title:t,body:b,rating:ST.curRating,helpful:0,myVote:false,time:'Just now'});
+  ST.curRating=0;
+  renderReviews();showToast('✅ Review published!');
+}
+
+function voteRv(id){
+  for(var i=0;i<ST.reviews.length;i++){
+    if(ST.reviews[i].id===id){
+      ST.reviews[i].myVote=!ST.reviews[i].myVote;
+      ST.reviews[i].helpful+=ST.reviews[i].myVote?1:-1;
+      break;
+    }
+  }
+  renderReviews();
+}
+
+// ── COMMUNITY ───────────────────────────────────────────────
+function renderCommunity(){
+  var html=COMMUNITY.map(function(p){
+    return '<div class="fi">'
+      +'<div class="fi-av">'+p.w.slice(1,3).toUpperCase()+'</div>'
+      +'<div class="fi-bd">'
+      +'<div class="fi-hd"><span class="fi-w">'+p.w+'</span><span class="fi-vb">✓</span><span class="fi-tm">'+p.t+'</span></div>'
+      +'<div class="fi-tx">'+p.txt+'</div>'
+      +'<div style="font-size:11px;color:var(--t3);margin-top:5px">♥ '+p.lk+'</div>'
+      +'</div></div>';
+  }).join('');
+  document.getElementById('page-community').innerHTML=
+    '<section class="sec">'
+    +'<div class="sec-label">Community</div>'
+    +'<div class="sec-h">Builder<br><span class="dim">Voices.</span></div>'
+    +'<p class="sec-p">Latest from the Ritual builder community.</p>'
+    +'<div class="glist">'+html+'</div>'
+    +'</section>';
+}
+
+// ── UTILS ───────────────────────────────────────────────────
+function closeOv(id){document.getElementById(id).classList.remove('open');}
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove('show');},2800);
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){var ovs=document.querySelectorAll('.ov.open');for(var i=0;i<ovs.length;i++)ovs[i].classList.remove('open');}});
+
+// ── INIT ────────────────────────────────────────────────────
+showPage('home');
+</script>
+</body>
+</html>
